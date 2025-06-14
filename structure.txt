@@ -1,0 +1,45 @@
+EGTGBT/
+│
+├── bots/                  # Сгенерированные боты и шаблоны
+│   ├── bot_template.py.j2  # Шаблон для генерации ботов
+│   └── *.py              # Сгенерированные файлы ботов (например, generated_bot.py)
+│
+├── docs/                  # Документация проекта
+│   ├── architecture/      # Архитектурные документы
+│   │   ├── class_diagram.puml
+│   │   └── sequence_diagram.puml
+│   ├── templates/         # Документация по шаблонам
+│   │   └── docs_templates.markdown
+│   ├── getting_started.md
+│   ├── index.md
+│   └── user_experience_report.markdown
+│
+├── src/                   # Исходный код проекта
+│   ├── egtgbt/            # Пакет Python (модули проекта)
+│   │   ├── __init__.py
+│   │   ├── cli.py         # CLI-интерфейс
+│   │   ├── generate.py    # Генерация кода
+│   │   └── target_bot_code.py  # Основная логика бота
+│   └── utils/             # Утилиты
+│       ├── __init__.py
+│       └── utils_validation.py  # Валидация конфигураций
+│
+├── tests/                 # Тесты
+│   ├── __init__.py
+│   ├── test_*.py         # Файлы тестов
+│   └── coverage         # Отчеты о покрытии тестами
+│
+├── data/                  # Данные и базы
+│   └── bot_users.db      # База данных
+│
+├── config/                # Конфигурационные файлы
+│   └── config_business_card.json
+│
+├── .env                   # Переменные окружения
+├── .coverage             # Файл покрытия тестов (если используется)
+├── egtgbt.egg-info/       # Информация о пакете (генерируется setuptools)
+├── htmlcov/               # HTML-отчеты покрытия (если используются)
+├── mkdocs.yml             # Конфигурация MkDocs (если используется)
+├── pyproject.toml         # Конфигурация проекта (PEP 621)
+├── requirements.txt       # Зависимости
+├── setup.py               # Скрипт установки (может быть заменен pyproject.toml)

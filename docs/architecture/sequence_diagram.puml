@@ -1,0 +1,48 @@
+@startuml
+actor User
+participant Bot
+participant Dispatcher
+participant FSMContext
+participant Database
+
+User -> Bot: /create_bot
+Bot -> Dispatcher: обработать команду
+Dispatcher -> FSMContext: установить состояние template
+Dispatcher -> Bot: отправить сообщение с выбором шаблона
+Bot -> User: "Выберите шаблон для нового бота:" + кнопки
+User -> Bot: нажатие кнопки "FAQ"
+Bot -> Dispatcher: обработать callback "template_faq"
+Dispatcher -> FSMContext: обновить данные (template="faq", config, faq_list)
+Dispatcher -> Bot: запрос имени бота
+Bot -> User: "Введите имя нового бота:"
+User -> Bot: <bot_name>
+Bot -> Dispatcher: обработать сообщение
+Dispatcher -> FSMContext: обновить config["bot_name"]
+Dispatcher -> Bot: запрос токена
+Bot -> User: "Введите токен бота..."
+User -> Bot: <bot_token>
+Bot -> Dispatcher: обработать сообщение
+Dispatcher -> FSMContext: обновить bot_token
+Dispatcher -> Bot: запрос количества FAQ
+Bot -> User: "Сколько вопросов FAQ..."
+User -> Bot: <faq_count>
+Bot -> Dispatcher: обработать сообщение
+loop для каждого вопроса (faq_count раз)
+  Dispatcher -> FSMContext: обновить current_faq
+  Dispatcher -> Bot: запрос вопроса
+  Bot -> User: "Введите текст вопроса..."
+  User -> Bot: <question>
+  Bot -> Dispatcher: обработать сообщение
+  Dispatcher -> FSMContext: обновить faq_question
+  Dispatcher -> Bot: запрос ответа
+  Bot -> User: "Введите ответ..."
+  User -> Bot: <answer>
+  Bot -> Dispatcher: обработать сообщение
+  Dispatcher -> FSMContext: добавить в faq_list
+end
+Dispatcher -> FSMContext: вызвать finalize_faq
+FSMContext -> Database: сохранить конфигурацию
+Database --> FSMContext: config_id
+FSMContext -> Bot: сгенерировать и запустить бот
+Bot -> User: "Бот '<bot_name>' успешно создан..."
+@enduml
